@@ -1,0 +1,12 @@
+<!-- Respuesta automatica — se inyecta en el MANAGER: /var/ossec/etc/ossec.conf -->
+<!-- Lista blanca: nunca bloquear al admin (host) ni al propio SIEM -->
+<global>
+  <white_list>192.168.56.1</white_list>
+  <white_list>192.168.56.30</white_list>
+</global>
+<active-response>
+  <command>firewall-drop</command>
+  <location>local</location>
+  <rules_id>100101,5763</rules_id>
+  <timeout>180</timeout>
+</active-response>

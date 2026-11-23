@@ -1,0 +1,8 @@
+<!-- Ingesta de logs y FIM — se anexa en el AGENTE (tiendacr-web): /var/ossec/etc/ossec.conf -->
+<localfile><log_format>json</log_format><location>/var/log/suricata/eve.json</location></localfile>
+<localfile><log_format>apache</log_format><location>/var/log/apache2/access.log</location></localfile>
+<localfile><log_format>apache</log_format><location>/var/log/apache2/tiendacr_error.log</location></localfile>
+<syscheck>
+  <directories realtime="yes" check_all="yes" report_changes="yes">/opt/tiendacr/uploads</directories>
+  <directories realtime="yes" check_all="yes">/etc/ssh,/etc/apache2,/etc/suricata/rules</directories>
+</syscheck>

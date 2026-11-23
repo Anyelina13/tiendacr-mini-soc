@@ -1,0 +1,7 @@
+# Reglas propias Suricata — TiendaCR (NIDS en tiendacr-web, interfaz enp0s8)
+# Rango SID local reservado: 1000001-1000999
+alert tcp any any -> $HOME_NET any (msg:"TIENDACR Escaneo de puertos SYN"; flow:stateless; flags:S,12; threshold:type both, track by_src, count 20, seconds 10; classtype:attempted-recon; sid:1000001; rev:1;)
+alert http any any -> $HOME_NET any (msg:"TIENDACR SQLi UNION SELECT en URI"; flow:established,to_server; http.uri; content:"union"; nocase; content:"select"; nocase; distance:0; classtype:web-application-attack; sid:1000002; rev:1;)
+alert http any any -> $HOME_NET any (msg:"TIENDACR SQLi OR 1=1"; flow:established,to_server; http.uri; pcre:"/'\s*or\s*'?\d+'?\s*=\s*'?\d+/i"; classtype:web-application-attack; sid:1000003; rev:1;)
+alert http any any -> $HOME_NET any (msg:"TIENDACR Fuerza bruta login DVWA"; flow:established,to_server; http.uri; content:"/vulnerabilities/brute/"; content:"password="; threshold:type threshold, track by_src, count 10, seconds 30; classtype:attempted-user; sid:1000004; rev:1;)
+alert http any any -> $HOME_NET any (msg:"TIENDACR Carga de .php (posible webshell)"; flow:established,to_server; http.method; content:"POST"; http.request_body; content:".php"; nocase; classtype:web-application-attack; sid:1000005; rev:1;)
