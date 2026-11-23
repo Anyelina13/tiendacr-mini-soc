@@ -62,8 +62,15 @@ evidencias/   # salidas saneadas por ataque y antes/después (PENDIENTE: corrida
 ```
 
 ## Informe
-Secciones en [`docs/informe/`](docs/informe/) (00_resumen … 09_conclusiones). Se compilan con
-`pandoc` a PDF: `pandoc docs/informe/0*.md -o P1_Chacon_<Apellido2>.pdf --toc`.
+Secciones en [`docs/informe/`](docs/informe/) (00_resumen … 09_conclusiones). **Ya compilado** a
+Word y PDF con estilo UTN: [`docs/informe/P1_ChaconMora-MiniSOC.docx`](docs/informe/P1_ChaconMora-MiniSOC.docx)
+y `.pdf` (15 págs, portada, 9 tablas, diagrama embebido, Anexo A de riesgos). Para recompilar tras
+llenar los datos en vivo, usa el builder de Word COM (ver [`EJECUTAR.md`](EJECUTAR.md) §8).
+
+## Corrida en vivo
+Procedimiento de una sola pasada en [`EJECUTAR.md`](EJECUTAR.md): crea las 3 VMs con
+`VBoxManage unattended` (sin `mkisofs`), provisiona SIEM/web/atacante, aplica hardening, lanza los
+4 ataques y mide tiempos. Orquestador: [`scripts/desplegar_lab.sh`](scripts/desplegar_lab.sh).
 
 ## Seguridad y secretos
 Nunca se suben llaves, contraseñas ni la clave del panel Wazuh: están en `.gitignore` y se usan
@@ -76,5 +83,7 @@ ejecución real; lo no medido se marca `PENDIENTE` (no se inventan datos). Ver l
 completa en [`docs/informe/09_conclusiones.md`](docs/informe/09_conclusiones.md).
 
 ## Estado
-Repositorio, scripts, configuraciones y redacción: **completos**. Ejecución del lab en vivo y
-evidencias medidas: **PENDIENTE** (requiere levantar las 3 VMs; los scripts las generan).
+Repositorio, scripts, configuraciones, **informe compilado (Word+PDF)**, diagrama y runbook de
+ejecución: **completos**. Ejecución del lab en vivo y evidencias medidas: **PENDIENTE** (requiere
+levantar las 3 VMs con ~9 GB de RAM libre; `scripts/desplegar_lab.sh` + `EJECUTAR.md` las generan
+en una sola pasada).
