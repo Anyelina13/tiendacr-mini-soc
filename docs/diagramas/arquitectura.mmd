@@ -1,0 +1,14 @@
+flowchart LR
+  subgraph HOST["Laptop anfitriona (192.168.56.1)"]
+    ADMIN["Operador / SSH + VBoxManage"]
+  end
+  subgraph REDLAB["Red host-only vboxnet0 — 192.168.56.0/24 (sin DHCP)"]
+    KALI["kali-atacante\n192.168.56.10\nnmap · hydra · sqlmap"]
+    WEB["tiendacr-web 192.168.56.20\nApache :80 (reverse proxy)\nDVWA en 127.0.0.1:8080 (Docker)\nSuricata NIDS · Wazuh agent · UFW"]
+    SIEM["tiendacr-siem 192.168.56.30\nWazuh manager + indexer + dashboard\nActive Response (firewall-drop)"]
+  end
+  ADMIN -- SSH llave --> WEB
+  ADMIN -- SSH llave / 443 panel --> SIEM
+  KALI -- ataques 80/tcp --> WEB
+  WEB -- eventos 1514/1515 --> SIEM
+  SIEM -- orden firewall-drop --> WEB

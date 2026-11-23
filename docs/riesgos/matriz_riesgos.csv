@@ -1,0 +1,14 @@
+ID,Activo,Amenaza,Vulnerabilidad,Probabilidad(1-5),Impacto(1-5),Riesgo(PxI),Nivel,Tratamiento,Control,Responsable,Riesgo_residual
+R01,App DVWA / BD MariaDB,Inyeccion SQL (exfiltracion de datos),Entrada no parametrizada (A03:2021 / CWE-89),5,5,25,Critico,Mitigar,WAF ModSecurity + OWASP CRS + consultas parametrizadas,A,PENDIENTE
+R02,Login de la app,Fuerza bruta de credenciales,Sin bloqueo ni rate-limit (A07:2021 / CWE-307),5,4,20,Alto,Mitigar,Regla Wazuh 100101 + Active Response firewall-drop,B,PENDIENTE
+R03,SSH de las VMs,Fuerza bruta / acceso remoto no autorizado,Password auth habilitado,3,5,15,Alto,Mitigar,SSH solo-llaves + UFW por IP + AllowUsers,A,PENDIENTE
+R04,Formulario de carga,Webshell por file upload,Sin validacion de tipo; PHP ejecutable en uploads (CWE-434),4,5,20,Alto,Mitigar,FIM Wazuh 100300 + php_admin_flag engine off,B,PENDIENTE
+R05,App DVWA,Cross-Site Scripting (XSS),Salida sin codificar (A03:2021 / CWE-79),4,3,12,Medio,Mitigar,OWASP CRS + codificacion de salida,A,PENDIENTE
+R06,Superficie de red,Reconocimiento / escaneo de puertos,Servicios expuestos sin filtrado estricto,5,2,10,Medio,Mitigar,UFW deny-by-default + regla Suricata 1000001,B,PENDIENTE
+R07,Sistema operativo del host web,Explotacion de CVE del SO,Paquetes sin parchar,3,5,15,Alto,Mitigar,Vulnerability Detection Wazuh + apt upgrade,A,PENDIENTE
+R08,Contenedor Docker,Fuga que salta el firewall,Docker inyecta iptables que evitan UFW,3,4,12,Medio,Mitigar,Publicar solo en 127.0.0.1:8080 + reverse proxy,B,PENDIENTE
+R09,Llave SSH del laboratorio,Robo de llave privada,Llave sin passphrase / en disco,2,5,10,Medio,Mitigar,Permisos 600 + .gitignore + rotacion,A,PENDIENTE
+R10,SIEM Wazuh,Caida del SIEM (perdida de visibilidad),Recurso critico unico,2,5,10,Medio,Transferir/Mitigar,Snapshots + monitoreo del propio servicio,B,PENDIENTE
+R11,Active Response,Bloqueo de trafico legitimo / DoS autoinducido,IP spoofing o falso positivo,3,3,9,Medio,Mitigar,Lista blanca + timeout 180s + umbral de frecuencia,A,PENDIENTE
+R12,Credenciales del panel Wazuh,Uso de credenciales por defecto,Clave debil / por defecto,2,5,10,Medio,Mitigar,Cambio de clave + acceso solo desde host admin,B,PENDIENTE
+R13,Logs de seguridad,Manipulacion / borrado de logs,Logs locales sin proteger,2,4,8,Bajo,Mitigar,Envio al SIEM (manager) + FIM sobre /etc,A,PENDIENTE
